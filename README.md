@@ -1,24 +1,22 @@
-# Tamil Nadu Road Safety Awareness Portal (TN-RSAP)
+# 🚦 Tamil Nadu Road Safety Portal
 
-## Project Overview
-TN-RSAP is a government-grade bilingual web application designed to reduce road accidents and improve traffic discipline in Tamil Nadu. It serves as a central hub for safety information, rules, and citizen reporting.
+A web-based portal designed to create awareness about road safety in Tamil Nadu.
+This project focuses on educating users through a simple, clean, and responsive interface.
 
-## Key Features
-- **Bilingual UI**: Full support for English and Tamil.
-- **Black Spot Awareness**: Interactive map showing high-risk accident zones.
-- **Traffic Rules & Penalties**: Comprehensive guide to current TN traffic laws.
-- **First Aid Training**: Visual guides for emergency response and CPR.
-- **Citizen Feedback**: Portal for reporting road issues and signal malfunctions.
-- **Government Alignment**: Designed with official TN branding and leadership transparency.
+## 🔗 Live Project
+👉 https://tanisshq7.github.io/tn-road-safety-portal/
 
-## Tech Stack
-- HTML5
-- CSS3 (Custom Grid/Flexbox, Animations)
-- Vanilla JavaScript (Bilingual Logic, State Management)
+## ✨ Features
+- Road safety awareness content
+- Responsive and user-friendly UI
+- Clean layout with structured sections
+- Hosted using GitHub Pages
 
-## How to Run
-1. Open `index.html` in any modern web browser.
-2. Use the language toggle in the top bar to switch between English and Tamil.
+## 🛠️ Tech Stack
+- HTML
+- CSS
+- JavaScript
 
----
-*Disclaimer: This portal is a demonstration project developed for educational and awareness purposes.*
+## 🎯 Purpose
+This project was developed for learning, public awareness, and portfolio demonstration.
+Future enha
