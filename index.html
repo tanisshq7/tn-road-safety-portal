@@ -12,6 +12,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+Tamil:wght@400;700&display=swap"
         rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#003366">
 </head>
 
 <body>
@@ -72,26 +75,7 @@
                 </div>
                 <div class="news-list-container">
                     <ul class="news-list">
-                        <li><span class="news-date" data-i18n="news_tag_new">New</span>
-                            <p data-i18n="news_item_1">Jan 2026: ₹25,000 fine for Juvenile driving; parents face legal
-                                action.</p>
-                        </li>
-                        <li><span class="news-date" data-i18n="news_tag_update">Update</span>
-                            <p data-i18n="news_item_2">Drunk Driving: Strict ₹10,000 fine and 6-month imprisonment
-                                implemented.</p>
-                        </li>
-                        <li><span class="news-date" data-i18n="news_tag_alert">Alert</span>
-                            <p data-i18n="news_item_3">CCTV Alert: ₹10,000 fine for blocking emergency vehicles
-                                (Ambulance/Fire).</p>
-                        </li>
-                        <li><span class="news-date" data-i18n="news_tag_news">News</span>
-                            <p data-i18n="news_item_4">IIT Madras launches 'ThinnAI' - AI-based learning for driver
-                                awareness.</p>
-                        </li>
-                        <li><span class="news-date" data-i18n="news_tag_eco">Sustainability</span>
-                            <p data-i18n="news_item_5">Sustainability: 100% MV Tax exemption for EVs extended to 2027.
-                            </p>
-                        </li>
+                        <!-- News items will be injected by JS -->
                     </ul>
                 </div>
             </aside>
@@ -156,6 +140,10 @@
         <section id="analytics" class="container"
             style="padding: 40px 0; background: white; border-radius: 15px; margin-top: 20px; box-shadow: var(--shadow);">
             <h3 class="section-title" data-i18n="analytics_title">Accident Analytics & Insights</h3>
+
+            <div style="max-width: 800px; margin: 0 auto 40px auto; padding: 20px;">
+                <canvas id="safetyChart"></canvas>
+            </div>
 
             <!-- Recent Insights Grid -->
             <div>
@@ -246,6 +234,53 @@
             </div>
         </section>
 
+
+        <section id="fine-checker" class="container" style="padding: 40px 0;">
+            <div class="fine-calculator-card">
+                <h3 class="section-title" data-i18n="fine_title" style="margin-bottom: 10px;">Traffic Fine Checker</h3>
+                <p style="text-align: center; margin-bottom: 25px; color: #666;" data-i18n="fine_desc">Select a
+                    violation to check the penalty amount.</p>
+
+                <div class="fine-form-grid">
+                    <div class="form-group">
+                        <label data-i18n="fine_sl_vehicle">Vehicle Type</label>
+                        <select id="fine-vehicle">
+                            <option value="bike" data-i18n="veh_bike">Two Wheeler</option>
+                            <option value="car" data-i18n="veh_car">Four Wheeler (Car)</option>
+                            <option value="heavy" data-i18n="veh_heavy">Heavy Vehicle</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="fine_sl_violation">Traffic Violation</label>
+                        <select id="fine-violation">
+                            <option value="helmet" data-i18n="vio_helmet">No Helmet</option>
+                            <option value="seatbelt" data-i18n="vio_seatbelt">No Seatbelt</option>
+                            <option value="overspeed" data-i18n="vio_overspeed">Over Speeding</option>
+                            <option value="drunk" data-i18n="vio_drunk">Drunk Driving</option>
+                            <option value="signal" data-i18n="vio_signal">Signal Jumping</option>
+                            <option value="license" data-i18n="vio_license">Driving without License</option>
+                            <option value="insurance" data-i18n="vio_insurance">Driving without Insurance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkFine()" style="width: 100%; margin-top: 20px;"
+                    data-i18n="fine_btn_check">Check Fine</button>
+
+                <div id="fine-result" class="fine-result-box" style="display: none;">
+                    <h4 style="color: var(--error-red); font-size: 1.5rem; margin-bottom: 10px;">
+                        <span data-i18n="fine_result_amount">Fine Amount:</span>
+                        <span id="fine-amount-display">₹1000</span>
+                    </h4>
+                    <p style="color: var(--tn-green); font-weight: bold;">
+                        <span data-i18n="fine_result_tip">Safety Tip:</span>
+                        <span id="fine-tip-display" style="font-weight: normal; color: #333;">Always wear a
+                            helmet.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <section id="emergency" class="container" style="padding: 60px 0;">
             <h3 class="section-title" data-i18n="firstaid_title">First Aid & Emergency Response</h3>
             <div class="emergency-grid">
@@ -275,6 +310,99 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+
+        <section id="report-accident" class="container"
+            style="padding: 60px 0; background-color: #fff5f5; border-radius: 12px; margin-top: 40px; box-shadow: var(--shadow);">
+            <h3 class="section-title" data-i18n="report_title">Report an Accident</h3>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto;" data-i18n="report_desc">Help us
+                save lives by reporting accidents.</p>
+
+            <form class="feedback-form" id="accident-report-form" style="background: white;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    <div class="form-group">
+                        <label data-i18n="report_district">District</label>
+                        <select id="acc-district" required>
+                            <option value="" data-i18n="feedback_district">Select District</option>
+                            <option value="ariyalur" data-i18n="dist_ariyalur">Ariyalur</option>
+                            <option value="chengalpattu" data-i18n="dist_chengalpattu">Chengalpattu</option>
+                            <option value="chennai" data-i18n="dist_chennai">Chennai</option>
+                            <option value="coimbatore" data-i18n="dist_coimbatore">Coimbatore</option>
+                            <option value="cuddalore" data-i18n="dist_cuddalore">Cuddalore</option>
+                            <option value="dharmapuri" data-i18n="dist_dharmapuri">Dharmapuri</option>
+                            <option value="dindigul" data-i18n="dist_dindigul">Dindigul</option>
+                            <option value="erode" data-i18n="dist_erode">Erode</option>
+                            <option value="kallakurichi" data-i18n="dist_kallakurichi">Kallakurichi</option>
+                            <option value="kanchipuram" data-i18n="dist_kanchipuram">Kanchipuram</option>
+                            <option value="kanyakumari" data-i18n="dist_kanyakumari">Kanyakumari</option>
+                            <option value="karur" data-i18n="dist_karur">Karur</option>
+                            <option value="krishnagiri" data-i18n="dist_krishnagiri">Krishnagiri</option>
+                            <option value="madurai" data-i18n="dist_madurai">Madurai</option>
+                            <option value="mayiladuthurai" data-i18n="dist_mayiladuthurai">Mayiladuthurai</option>
+                            <option value="nagapattinam" data-i18n="dist_nagapattinam">Nagapattinam</option>
+                            <option value="namakkal" data-i18n="dist_namakkal">Namakkal</option>
+                            <option value="nilgiris" data-i18n="dist_nilgiris">Nilgiris</option>
+                            <option value="perambalur" data-i18n="dist_perambalur">Perambalur</option>
+                            <option value="pudukkottai" data-i18n="dist_pudukkottai">Pudukkottai</option>
+                            <option value="ramanathapuram" data-i18n="dist_ramanathapuram">Ramanathapuram</option>
+                            <option value="ranipet" data-i18n="dist_ranipet">Ranipet</option>
+                            <option value="salem" data-i18n="dist_salem">Salem</option>
+                            <option value="sivaganga" data-i18n="dist_sivaganga">Sivaganga</option>
+                            <option value="tenkasi" data-i18n="dist_tenkasi">Tenkasi</option>
+                            <option value="thanjavur" data-i18n="dist_thanjavur">Thanjavur</option>
+                            <option value="theni" data-i18n="dist_theni">Theni</option>
+                            <option value="thoothukudi" data-i18n="dist_thoothukudi">Thoothukudi</option>
+                            <option value="tiruchirappalli" data-i18n="dist_tiruchirappalli">Tiruchirappalli</option>
+                            <option value="tirunelveli" data-i18n="dist_tirunelveli">Tirunelveli</option>
+                            <option value="tirupathur" data-i18n="dist_tirupathur">Tirupathur</option>
+                            <option value="tiruppur" data-i18n="dist_tiruppur">Tiruppur</option>
+                            <option value="tiruvallur" data-i18n="dist_tiruvallur">Tiruvallur</option>
+                            <option value="tiruvannamalai" data-i18n="dist_tiruvannamalai">Tiruvannamalai</option>
+                            <option value="tiruvarur" data-i18n="dist_tiruvarur">Tiruvarur</option>
+                            <option value="vellore" data-i18n="dist_vellore">Vellore</option>
+                            <option value="viluppuram" data-i18n="dist_viluppuram">Viluppuram</option>
+                            <option value="virudhunagar" data-i18n="dist_virudhunagar">Virudhunagar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="report_location">Accident Location</label>
+                        <input type="text" id="acc-location" data-i18n-placeholder="placeholder_location" required>
+                    </div>
+                </div>
+
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px;">
+                    <div class="form-group">
+                        <label data-i18n="report_datetime">Date & Time</label>
+                        <input type="datetime-local" id="acc-datetime" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="report_type">Accident Type</label>
+                        <select id="acc-type" required>
+                            <option value="collision" data-i18n="type_collision">Vehicle Collision</option>
+                            <option value="pedestrian" data-i18n="type_pedestrian">Pedestrian Hit</option>
+                            <option value="rollover" data-i18n="type_rollover">Vehicle Rollover</option>
+                            <option value="skid" data-i18n="type_skid">Skidding / Loss of Control</option>
+                            <option value="other" data-i18n="type_other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label data-i18n="report_severity">Severity</label>
+                    <select id="acc-severity" required>
+                        <option value="fatal" data-i18n="sev_fatal">Fatal (Death)</option>
+                        <option value="grievous" data-i18n="sev_grievous">Grievous Injury</option>
+                        <option value="minor" data-i18n="sev_minor">Minor Injury</option>
+                        <option value="damage" data-i18n="sev_damage">Property Damage Only</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; margin-top: 30px; padding: 15px; font-size: 1.1rem; background-color: var(--error-red);"
+                    data-i18n="report_btn_submit">Submit Report</button>
+            </form>
         </section>
 
         <section id="feedback" class="container" style="padding: 60px 0; background: var(--bg-gray);">
@@ -381,6 +509,26 @@
             </form>
         </section>
     </main>
+
+    <!-- Floating SOS Button -->
+    <div class="sos-container">
+        <div class="sos-popup" id="sos-popup">
+            <h4 data-i18n="sos_title">Emergency Help</h4>
+            <a href="tel:108" class="sos-option ambulance">
+                <span data-i18n="sos_call_ambulance">Call Ambulance (108)</span>
+            </a>
+            <a href="tel:100" class="sos-option police">
+                <span data-i18n="sos_call_police">Call Police (100)</span>
+            </a>
+            <button class="sos-option location" onclick="shareLocation()">
+                <span data-i18n="sos_share_loc">Share My Location</span>
+            </button>
+        </div>
+        <button class="sos-float-btn" onclick="toggleSOS()">
+            <span class="sos-icon">🚨</span>
+            <span class="sos-text" data-i18n="sos_btn">SOS</span>
+        </button>
+    </div>
 
     <footer>
         <div class="footer-content">

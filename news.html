@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - TN Road Safety Portal</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+Tamil:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+</head>
+
+<body>
+
+    <header>
+        <div class="main-header">
+            <div class="gov-branding">
+                <img src="assets/emblem.png" alt="TN Government Emblem" class="tn-emblem">
+                <div class="portal-title">
+                    <h1 data-i18n="portal_title">Tamil Nadu Road Safety</h1>
+                    <p>Official Updates</p>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="analytics.html" data-i18n="nav_blackspots">Analytics</a></li>
+                    <li><a href="news.html" class="active" data-i18n="nav_rules"
+                            style="color:white; text-shadow: 0 0 10px rgba(255,255,255,0.5);">Updates</a></li>
+                </ul>
+            </nav>
+            <div class="lang-switcher">
+                <button id="lang-switch-btn" data-i18n="switch_lang">தமிழ்</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 120px;">
+
+        <h2 class="section-title" data-i18n="news_title">Government Notifications</h2>
+
+        <div class="news-list-container"
+            style="background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <ul class="news-list">
+                <!-- Static list for now, JS will populate if logic is shared, 
+                     but let's hardcode the full list here for structure since main.js targets .news-list -->
+            </ul>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center;">
+            <p>Government of Tamil Nadu - Road Safety Mission</p>
+        </div>
+    </footer>
+
+    <!-- SOS Button -->
+    <div class="sos-container">
+        <button class="sos-float-btn" onclick="toggleSOS()">
+            <span style="font-size: 1.5rem;">🚨</span>
+            <span data-i18n="sos_btn">SOS</span>
+        </button>
+        <div class="sos-popup" id="sosPopup">
+            <a href="tel:108" class="sos-option ambulance">
+                <span>🚑</span> <span data-i18n="sos_call_ambulance">Ambulance</span>
+            </a>
+            <a href="tel:100" class="sos-option police">
+                <span>🚓</span> <span data-i18n="sos_call_police">Police</span>
+            </a>
+            <button class="sos-option location" onclick="shareLocation()">
+                <span>📍</span> <span data-i18n="sos_share_loc">Share Location</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -101,8 +101,68 @@ const translations = {
         inset_enforcement_text: "80,558 licenses suspended for traffic violations to improve safety.",
         inset_helmet: "Life-Saving Habit",
         inset_helmet_text: "38% drop in two-wheeler fatalities thanks to strict helmet compliance.",
+
+        // Accident Reporting Section
+        report_title: "Report an Accident",
+        report_desc: "Help us save lives by reporting accidents. Your timely information can help emergency services and improve road safety analysis.",
+        report_district: "District",
+        report_location: "Accident Location",
+        report_datetime: "Date & Time",
+        report_type: "Accident Type",
+        report_severity: "Severity",
+        report_btn_submit: "Submit Report",
+        report_success: "Accident reported successfully! Thank you for being a responsible citizen.",
+
+        // Form Options
+        type_collision: "Vehicle Collision",
+        type_pedestrian: "Pedestrian Hit",
+        type_rollover: "Vehicle Rollover",
+        type_skid: "Skidding / Loss of Control",
+        type_other: "Other",
+
+        sev_fatal: "Fatal (Death)",
+        sev_grievous: "Grievous Injury",
+        sev_minor: "Minor Injury",
+        sev_damage: "Property Damage Only",
+
         awareness_title: "Road Safety Awareness",
         hero_title: "Safe Roads, Save Lives",
+
+        // SOS Section
+        sos_btn: "SOS / Emergency",
+        sos_title: "Emergency Help",
+        sos_call_ambulance: "Call Ambulance (108)",
+        sos_call_police: "Call Police (100)",
+        sos_share_loc: "Share My Location",
+        sos_loc_sent: "Location sent to control room: ",
+        sos_loc_error: "Unable to retrieve location. Please check location permissions.",
+
+        // Fine Checker
+        fine_title: "Traffic Fine Checker",
+        fine_desc: "Select a violation to check the penalty amount.",
+        fine_sl_vehicle: "Vehicle Type",
+        fine_sl_violation: "Traffic Violation",
+        fine_btn_check: "Check Fine",
+        fine_result_amount: "Fine Amount:",
+        fine_result_tip: "Safety Tip:",
+
+        // Dropdown Items
+        veh_bike: "Two Wheeler",
+        veh_car: "Four Wheeler (Car)",
+        veh_heavy: "Heavy Vehicle",
+
+        vio_helmet: "No Helmet",
+        vio_seatbelt: "No Seatbelt",
+        vio_overspeed: "Over Speeding",
+        vio_drunk: "Drunk Driving",
+        vio_signal: "Signal Jumping",
+        vio_license: "Driving without License",
+        vio_insurance: "Driving without Insurance",
+
+        // Chart Keys
+        chart_title: "Road Accident Trends (2020-2025)",
+        chart_label_accidents: "Total Accidents",
+        chart_label_fatalities: "Fatalities",
 
         hero_subtitle: "An initiative to achieve Zero Accidents in Tamil Nadu through awareness, education, and enforcement.",
         pledge_btn: "I Pledge to Follow Road Safety Rules",
@@ -226,7 +286,67 @@ const translations = {
         inset_enforcement_text: "பாதுகாப்பை மேம்படுத்த 80,558 ஓட்டுநர் உரிமங்கள் ரத்து செய்யப்பட்டுள்ளன.",
         inset_helmet: "தலைக்கவசம் அணியும் பழக்கம்",
         inset_helmet_text: "கடுமையான தலைக்கவசம் விதிமுறையால் விபத்து மரணங்கள் 38% குறைந்துள்ளன.",
+
+        // Accident Reporting Section
+        report_title: "விபத்தை புகாரளிக்கவும்",
+        report_desc: "விபத்துக்களைப் புகாரளிப்பதன் மூலம் உயிர்களைக் காப்பாற்ற உதவுங்கள். உங்கள் சரியான நேரத் தகவல் அவசர சேவைகளுக்கு உதவும்.",
+        report_district: "மாவட்டம்",
+        report_location: "விபத்து நடந்த இடம்",
+        report_datetime: "தேதி & நேரம்",
+        report_type: "விபத்து வகை",
+        report_severity: "தீவிரம்",
+        report_btn_submit: "புகாரை சமர்ப்பிக்கவும்",
+        report_success: "விபத்து வெற்றிகரமாக புகாரளிக்கப்பட்டது! பொறுப்புள்ள குடிமகனாக இருந்ததற்கு நன்றி.",
+
+        // Form Options
+        type_collision: "வாகன மோதல்",
+        type_pedestrian: "பாதசாரி மீது மோதல்",
+        type_rollover: "வாகனம் கவிழ்ந்தது",
+        type_skid: " சறுக்கல் / கட்டுப்பாடு இழந்தது",
+        type_other: "மற்றவை",
+
+        sev_fatal: "உயிரிழப்பு (மரணம்)",
+        sev_grievous: "கடுமையான காயம்",
+        sev_minor: "சிறிய காயம்",
+        sev_damage: "சொத்து சேதம் மட்டும்",
+
         hero_title: "பாதுகாப்பான சாலைகள், உயிர்களைக் காக்கும்",
+
+        // SOS Section
+        sos_btn: "SOS / அவசரம்",
+        sos_title: "அவசர உதவி",
+        sos_call_ambulance: "ஆம்புலன்ஸ் (108)",
+        sos_call_police: "காவல்துறை (100)",
+        sos_share_loc: "என் இருப்பிடத்தைப் பகிரவும்",
+        sos_loc_sent: "கட்டுப்பாட்டு அறைக்கு இருப்பிடம் அனுப்பப்பட்டது: ",
+        sos_loc_error: "இருப்பிடத்தைப் பெற முடியவில்லை. இருப்பிட அனுமதியை சரிபார்க்கவும்.",
+
+        // Fine Checker
+        fine_title: "போக்குவரத்து அபராத சரிபார்ப்பு",
+        fine_desc: "அபராதத் தொகையை அறிய விதிமீறல் மற்றும் வாகன வகையைத் தேர்வுசெய்க.",
+        fine_sl_vehicle: "வாகன வகை",
+        fine_sl_violation: "போக்குவரத்து விதிமீறல்",
+        fine_btn_check: "அபராதத்தைச் சரிபார்க்கவும்",
+        fine_result_amount: "அபராதத் தொகை:",
+        fine_result_tip: "பாதுகாப்புக்குறிப்பு:",
+
+        // Dropdown Items
+        veh_bike: "இரு சக்கர வாகனம்",
+        veh_car: "நான்கு சக்கர வாகனம் (கார்)",
+        veh_heavy: "கனரக வாகனம்",
+
+        vio_helmet: "தலைக்கவசம் அணியாமை",
+        vio_seatbelt: "சீட் பெல்ட் அணியாமை",
+        vio_overspeed: "அதிவேகம்",
+        vio_drunk: "மது அருந்தி ஓட்டுதல்",
+        vio_signal: "சிக்னல் மீறல்",
+        vio_license: "உரிமம் இன்மை",
+        vio_insurance: "காப்பீடு இன்மை",
+
+        // Chart Keys
+        chart_title: "சாலை விபத்து போக்குகள் (2020-2025)",
+        chart_label_accidents: "மொத்த விபத்துகள்",
+        chart_label_fatalities: "உயிரிழப்புகள்",
 
         hero_subtitle: "விழிப்புணர்வு, கல்வி மற்றும் அமலாக்கம் மூலம் தமிழ்நாட்டில் பூஜ்ஜிய விபத்துக்களை அடைவதற்கான ஒரு முயற்சி.",
         pledge_btn: "நான் சாலை பாதுகாப்பு விதிகளைப் பின்பற்றுவதாக உறுதியளிக்கிறேன்",

@@ -26,9 +26,10 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
-    background: linear-gradient(-45deg, #ffffff, #f0f7ff, #f5fff8, #ffffff);
-    background-size: 400% 400%;
-    animation: globalGradient 15s ease infinite;
+    /* Soft Gradient Background */
+    background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%);
+    background-attachment: fixed;
+    /* fix gradient on scroll */
     min-height: 100vh;
 }
 
@@ -626,4 +627,179 @@ canvas {
         flex-direction: column;
         gap: 20px;
     }
+}
+
+/* Fine Calculator */
+.fine-calculator-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    margin: 0 auto;
+    border-top: 5px solid var(--accent-gold);
+}
+
+.fine-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.fine-result-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #fff8f8;
+    border: 2px dashed var(--error-red);
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* SOS Floating Button */
+.sos-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.sos-float-btn {
+    background: var(--error-red);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: pulse-red 2s infinite;
+}
+
+.sos-float-btn:hover {
+    transform: scale(1.05);
+}
+
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(211, 47, 47, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+    }
+}
+
+.sos-popup {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    display: none;
+    /* Hidden by default */
+    flex-direction: column;
+    gap: 10px;
+    transform-origin: bottom right;
+    animation: popIn 0.3s ease-out;
+}
+
+.sos-popup.active {
+    display: flex;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.sos-popup h4 {
+    color: var(--error-red);
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.sos-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.sos-option.ambulance {
+    background: #ffebee;
+    color: var(--error-red);
+}
+
+.sos-option.ambulance:hover {
+    background: var(--error-red);
+    color: white;
+}
+
+.sos-option.police {
+    background: #e3f2fd;
+    color: var(--primary-blue);
+}
+
+.sos-option.police:hover {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.sos-option.location {
+    background: #e8f5e9;
+    color: var(--tn-green);
+}
+
+.sos-option.location:hover {
+    background: var(--tn-green);
+    color: white;
+}
+
+/* Tamil Font Override */
+[lang="ta"] body {
+    font-family: 'Noto Sans Tamil', sans-serif !important;
 }
