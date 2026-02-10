@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - TN Road Safety Portal</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #003366;
+            color: white;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-container">
+        <h1>Visitor Log</h1>
+        <p>List of users who logged into the portal.</p>
+
+        <div id="auth-check">
+            <p>Please log in to view data.</p>
+            <button id="admin-login-btn" class="btn" style="background: var(--tn-green);">Login as Admin</button>
+        </div>
+
+        <div id="data-view" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Last Visit</th>
+                    </tr>
+                </thead>
+                <tbody id="visitor-table-body">
+                    <!-- Data here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        async function init() {
+            try {
+                // Auto-configure from hosting environment
+                const response = await fetch('/__/firebase/init.json');
+                const config = await response.json();
+                const app = initializeApp(config);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
+
+                // Login Logic
+                document.getElementById('admin-login-btn').addEventListener('click', async () => {
+                    const provider = new GoogleAuthProvider();
+                    try {
+                        await signInWithPopup(auth, provider);
+                    } catch (e) {
+                        alert("Login failed: " + e.message);
+                    }
+                });
+
+                // Auth State Listener
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        document.getElementById('auth-check').style.display = 'none';
+                        document.getElementById('data-view').style.display = 'block';
+                        loadData(db);
+                    } else {
+                        document.getElementById('auth-check').style.display = 'block';
+                        document.getElementById('data-view').style.display = 'none';
+                    }
+                });
+
+            } catch (e) {
+                console.error("Firebase init failed", e);
+                alert("Error initializing Firebase. Make sure you are running this on Firebase Hosting.");
+            }
+        }
+
+        async function loadData(db) {
+            const tbody = document.getElementById('visitor-table-body');
+            tbody.innerHTML = '<tr><td colspan="4">Loading data...</td></tr>';
+
+            try {
+                const q = query(collection(db, "visitors"), orderBy("last_seen", "desc"));
+                const querySnapshot = await getDocs(q);
+
+                tbody.innerHTML = ''; // Clear loading
+
+                if (querySnapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4">No visitors recorded yet.</td></tr>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.last_seen ? new Date(data.last_seen.seconds * 1000).toLocaleString() : 'N/A';
+                    const row = `
+                        <tr>
+                            <td><img src="${data.photo || 'assets/emblem.png'}" class="avatar"></td>
+                            <td>${data.name || 'Anonymous'}</td>
+                            <td>${data.email || 'No Email'}</td>
+                            <td>${date}</td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+            } catch (e) {
+                console.error("Error reading Firestore:", e);
+                tbody.innerHTML = `<tr><td colspan="4" style="color:red;">Error loading data: ${e.message}<br>Check if Firestore rules allow reading.</td></tr>`;
+            }
+        }
+
+        init();
+    </script>
+
+</body>
+
+</html>
